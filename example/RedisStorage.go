@@ -6,10 +6,12 @@ import (
 	"github.com/RangelReale/osin"
 	"gopkg.in/redis.v3"
   	"encoding/json"
+	  
+	"github.com/daclouds/oauth2/mysql"
 )
 
 var client = redis.NewClient(&redis.Options{
-  Addr: "192.168.64.2:6379",
+  Addr: "localhost:6379",
   Password: "", // no password set
   DB: 0, // use default DB
 })
@@ -22,6 +24,11 @@ type TestStorage struct {
 }
 
 func NewTestStorage() *TestStorage {
+	
+	// MySQL
+	mysql.Init()
+	
+	// Redis
 	r := &TestStorage{
 		clients:   make(map[string]osin.Client),
 		authorize: make(map[string]*osin.AuthorizeData),
